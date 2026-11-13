@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="publishersPageTitle">Editoras</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="registrations">CADASTROS</p><h1 data-i18n="publishersHeading">Editoras</h1></div><a class="button primary" th:href="@{/editoras/nova}" data-i18n="publisherAdd">+ Nova editora</a></div>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="publisherCompanyName">Razão social</th><th data-i18n="cnpjColumn">CNPJ</th><th data-i18n="addressColumn">Endereço</th><th data-i18n="cityColumn">Cidade</th><th data-i18n="actionsColumn">Ações</th></tr></thead>
+    <tbody>
+      <tr th:each="e : ${editoras}"><td th:text="${e.razaoSocial}"></td><td th:text="${e.cnpj}"></td><td th:text="${e.endereco}"></td><td th:text="${e.cidade}"></td><td class="actions"><a class="button small secondary" th:href="@{/editoras/{id}/editar(id=${e.id})}" data-i18n="edit">Editar</a><form th:action="@{/editoras/{id}/excluir(id=${e.id})}" method="post" data-i18n-confirm="publisherDeleteConfirm"><button class="button small danger" type="submit" data-i18n="delete">Excluir</button></form></td></tr>
+      <tr th:if="${#lists.isEmpty(editoras)}"><td colspan="5" class="empty" data-i18n="publisherEmpty">Nenhuma editora cadastrada.</td></tr>
+    </tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

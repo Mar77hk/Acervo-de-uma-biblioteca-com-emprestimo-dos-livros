@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="bookDetailPageTitle">Detalhe do livro</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <a th:href="@{/livros}" class="back-link" data-i18n="backToSearch">← Voltar à pesquisa</a>
+  <section class="panel">
+    <p class="eyebrow" data-i18n="collectionDetails">DETALHES DO ACERVO</p><h1 th:text="${livro.titulo}"></h1>
+    <dl class="details">
+      <dt data-i18n="volumeLabel">Volume</dt><dd th:text="${livro.numeroVolume}"></dd>
+      <dt data-i18n="isbnLabel">ISBN</dt><dd th:text="${livro.isbn}"></dd>
+      <dt data-i18n="publisherLabel">Editora</dt><dd th:text="${livro.editora.razaoSocial}"></dd>
+      <dt data-i18n="authorsLabel">Autor(es)</dt><dd><span th:each="autor,iter : ${livro.autores}"><span th:text="${autor.nome}"></span><span th:if="${!iter.last}">, </span></span></dd>
+      <dt data-i18n="registeredCopies">Exemplares cadastrados</dt><dd th:text="${totalExemplares}"></dd>
+      <dt data-i18n="availableCopies">Disponíveis</dt><dd th:text="${disponiveis}"></dd>
+    </dl>
+    <a th:if="${isFuncionario}" class="button primary" th:href="@{/admin/livros/{id}/editar(id=${livro.id})}" data-i18n="editRegistration">Editar cadastro</a>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

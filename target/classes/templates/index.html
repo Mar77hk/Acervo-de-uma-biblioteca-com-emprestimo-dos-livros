@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="homePageTitle">Biblioteca Acervo</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <section class="hero">
+    <p class="eyebrow" data-i18n="homeEyebrow">SISTEMA DE GERENCIAMENTO DE BIBLIOTECA</p>
+    <h1 data-i18n="homeHeading">Encontre sua próxima leitura.</h1>
+    <p data-i18n="homeDescription">Consulte o acervo, verifique informações dos livros e acompanhe a disponibilidade dos exemplares.</p>
+    <a class="button primary" th:href="@{/livros}" data-i18n="searchCollection">Pesquisar no acervo</a>
+  </section>
+  <section class="card-grid">
+    <article class="card"><h2 data-i18n="collectionCard">Acervo</h2><p data-i18n="collectionCardDescription">Cadastro e organização de livros, autores, editoras e exemplares.</p><a th:href="@{/livros}" data-i18n="consultBooks">Consultar livros →</a></article>
+    <article class="card"><h2 data-i18n="researchCard">Pesquisa</h2><p data-i18n="researchCardDescription">Pesquise por título, autor, editora ou ISBN.</p><a th:href="@{/livros}" data-i18n="openSearch">Abrir pesquisa →</a></article>
+    <article class="card" th:if="${isFuncionario}"><h2 data-i18n="loansCard">Empréstimos</h2><p data-i18n="loansCardDescription">Registre retiradas, devoluções, atrasos e avarias.</p><a th:href="@{/emprestimos}" data-i18n="manageLoans">Gerenciar empréstimos →</a></article>
+    <article class="card" th:if="${isFuncionario}"><h2 data-i18n="historyCard">Histórico</h2><p data-i18n="historyCardDescription">Consulte as movimentações realizadas no acervo.</p><a th:href="@{/historico}" data-i18n="viewMovements">Ver movimentações →</a></article>
+    <article class="card" th:if="${!isFuncionario}"><h2 data-i18n="registrationCard">Cadastro</h2><p data-i18n="registrationCardDescription">Crie seu cadastro para utilizar os serviços da biblioteca.</p><a th:href="@{/cadastro}" data-i18n="registerUser">Cadastrar usuário →</a></article>
+  </section>
+  <section class="note"><strong data-i18n="academicPrototype">Protótipo acadêmico:</strong> <span data-i18n="prototypeDescription">dados armazenados localmente em banco relacional H2. O acesso administrativo deve ser feito por funcionário.</span></section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

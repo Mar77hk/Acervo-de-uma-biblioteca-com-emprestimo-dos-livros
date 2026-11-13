@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="loanFormPageTitle">Registrar empréstimo</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <div th:replace="~{fragments :: messages}"></div>
+  <section class="panel">
+    <p class="eyebrow" data-i18n="circulation">CIRCULAÇÃO</p><h1 data-i18n="loanRegisterHeading">Registrar empréstimo</h1>
+    <form th:action="@{/emprestimos/salvar}" method="post" class="form-grid">
+      <label><span data-i18n="userLabel">Usuário</span><select name="usuarioId" required><option value="" data-i18n="selectUser">Selecione o usuário</option><option th:each="u : ${usuarios}" th:value="${u.id}" th:text="|${u.nome} (${u.tipoUsuario}) - ${u.email}|"></option></select></label>
+      <label><span data-i18n="availableCopyLabel">Exemplar disponível</span><select name="exemplarId" required><option value="" data-i18n="selectCopy">Selecione o exemplar</option><option th:each="ex : ${exemplares}" th:value="${ex.id}" th:text="|${ex.livro.titulo} — ${ex.codigoPatrimonio}|"></option></select></label>
+      <label><span data-i18n="loanPeriod">Prazo (dias)</span><input type="number" name="dias" min="1" max="90" value="14" required></label>
+      <div class="form-actions"><button class="button primary" type="submit" data-i18n="confirmLoan">Confirmar empréstimo</button><a class="button secondary" th:href="@{/emprestimos}" data-i18n="cancel">Cancelar</a></div>
+    </form>
+    <div class="note" data-i18n="loanNote">O sistema calcula a data prevista de devolução a partir da data atual e do prazo informado. O empréstimo altera o estado do exemplar para EMPRESTADO.</div>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

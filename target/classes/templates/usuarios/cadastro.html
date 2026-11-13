@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="userRegisterPageTitle">Cadastro de usuário</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <div th:replace="~{fragments :: messages}"></div>
+  <section class="panel">
+    <p class="eyebrow" data-i18n="newRegistration">NOVO CADASTRO</p><h1 data-i18n="createUserHeading">Criar conta de usuário</h1>
+    <p data-i18n="publicRegistrationDescription">O cadastro feito por esta página cria um usuário comum.</p>
+    <form th:action="@{/cadastro}" th:object="${form}" method="post" class="form-grid">
+      <label><span data-i18n="fullName">Nome completo</span><input th:field="*{nome}" required><small class="field-error" th:errors="*{nome}"></small></label>
+      <label><span data-i18n="emailLabel">E-mail</span><input type="email" th:field="*{email}" required><small class="field-error" th:errors="*{email}"></small></label>
+      <label><span data-i18n="cpfLabel">CPF (11 números)</span><input th:field="*{cpf}" inputmode="numeric" maxlength="11" required><small class="field-error" th:errors="*{cpf}"></small></label>
+      <label><span data-i18n="cepLabel">CEP (8 números)</span><input th:field="*{cep}" inputmode="numeric" maxlength="8" required><small class="field-error" th:errors="*{cep}"></small></label>
+      <label><span data-i18n="passwordMinimum">Senha (mínimo 8 caracteres)</span><input type="password" th:field="*{senha}" minlength="8" required><small class="field-error" th:errors="*{senha}"></small></label>
+      <div class="form-actions"><button class="button primary" type="submit" data-i18n="register">Cadastrar</button><a class="button secondary" th:href="@{/}" data-i18n="cancel">Cancelar</a></div>
+    </form>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

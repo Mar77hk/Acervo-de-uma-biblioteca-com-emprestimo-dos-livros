@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="usersAdminPageTitle">Gerenciar usuários</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="administration">ADMINISTRAÇÃO</p><h1 data-i18n="usersHeading">Usuários</h1><p data-i18n="usersDescription">Consulte os usuários e cadastre funcionários.</p></div></div>
+  <section class="panel">
+    <h2 data-i18n="registerEmployeeHeading">Cadastrar funcionário</h2>
+    <form th:action="@{/admin/usuarios/funcionario}" th:object="${form}" method="post" class="form-grid two-col">
+      <label><span data-i18n="fullName">Nome</span><input th:field="*{nome}" required><small class="field-error" th:errors="*{nome}"></small></label>
+      <label><span data-i18n="emailLabel">E-mail</span><input type="email" th:field="*{email}" required><small class="field-error" th:errors="*{email}"></small></label>
+      <label><span data-i18n="cpfLabel">CPF (11 números)</span><input th:field="*{cpf}" maxlength="11" required><small class="field-error" th:errors="*{cpf}"></small></label>
+      <label><span data-i18n="cepLabel">CEP (8 números)</span><input th:field="*{cep}" maxlength="8" required><small class="field-error" th:errors="*{cep}"></small></label>
+      <label><span data-i18n="passwordMinimum">Senha (mínimo 8 caracteres)</span><input type="password" th:field="*{senha}" minlength="8" required><small class="field-error" th:errors="*{senha}"></small></label>
+      <div class="form-actions"><button class="button primary" type="submit" data-i18n="registerEmployee">Cadastrar funcionário</button></div>
+    </form>
+  </section>
+  <h2 data-i18n="registeredUsersHeading">Usuários cadastrados</h2>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="nameColumn">Nome</th><th data-i18n="emailColumn">E-mail</th><th data-i18n="cpfColumn">CPF</th><th data-i18n="cepColumn">CEP</th><th data-i18n="userTypeColumn">Tipo</th></tr></thead>
+    <tbody><tr th:each="u : ${usuarios}"><td th:text="${u.nome}"></td><td th:text="${u.email}"></td><td th:text="${u.cpf}"></td><td th:text="${u.cep}"></td><td th:text="${u.tipoUsuario}" data-i18n-enum></td></tr></tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

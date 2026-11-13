@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="loansPageTitle">Empréstimos</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="circulation">CIRCULAÇÃO</p><h1 data-i18n="loansHeading">Empréstimos e devoluções</h1><p data-i18n="loansDescription">Registre retiradas, prazos, devoluções e condições físicas.</p></div><a class="button primary" th:href="@{/emprestimos/novo}" data-i18n="newLoan">+ Novo empréstimo</a></div>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="bookCopyColumn">Livro / exemplar</th><th data-i18n="userColumn">Usuário</th><th data-i18n="withdrawalColumn">Retirada</th><th data-i18n="deadlineColumn">Prazo</th><th data-i18n="returnDateColumn">Devolução</th><th data-i18n="situationColumn">Situação</th><th data-i18n="registerReturnColumn">Registrar devolução</th></tr></thead>
+    <tbody>
+      <tr th:each="e : ${emprestimos}">
+        <td><strong th:text="${e.exemplar.livro.titulo}"></strong><br><small th:text="${e.exemplar.codigoPatrimonio}"></small></td>
+        <td th:text="${e.usuario.nome}"></td>
+        <td th:text="${#temporals.format(e.dataEmprestimo, 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(e.dataPrevistaDevolucao, 'dd/MM/yyyy')}"></td>
+        <td><span th:if="${e.dataDevolucao == null}" data-i18n="pending">Pendente</span><span th:if="${e.dataDevolucao != null}" th:text="${#temporals.format(e.dataDevolucao, 'dd/MM/yyyy')}"></span></td>
+        <td><span th:if="${e.dataDevolucao == null and e.atrasado}" class="status late" data-i18n="loanLate">Atrasado</span><span th:if="${e.dataDevolucao == null and !e.atrasado}" class="status" data-i18n="loanOpen">Em aberto</span><span th:if="${e.dataDevolucao != null}" class="status ok" data-i18n="loanReturned">Devolvido</span></td>
+        <td><form th:if="${e.dataDevolucao == null}" th:action="@{/emprestimos/{id}/devolver(id=${e.id})}" method="post" class="inline-form"><label class="check-label"><input type="checkbox" name="avaria" value="true"> <span data-i18n="damage">Avaria</span></label><input name="observacao" placeholder="Observação da avaria" data-i18n-placeholder="damagePlaceholder"><button class="button small primary" type="submit" data-i18n="returnButton">Devolver</button></form><span th:if="${e.dataDevolucao != null}">—</span></td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(emprestimos)}"><td colspan="7" class="empty" data-i18n="loanEmpty">Nenhum empréstimo registrado.</td></tr>
+    </tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

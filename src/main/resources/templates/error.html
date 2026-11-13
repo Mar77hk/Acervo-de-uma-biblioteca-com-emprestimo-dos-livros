@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="errorPageTitle">Erro</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow"><section class="panel">
+  <h1 data-i18n="errorHeading">Não foi possível concluir a operação</h1>
+  <p data-i18n="errorDescription">Verifique os dados e tente novamente. Se o problema continuar, retorne à página inicial.</p>
+  <a class="button primary" th:href="@{/}" data-i18n="backToHome">Voltar ao início</a>
+</section></main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

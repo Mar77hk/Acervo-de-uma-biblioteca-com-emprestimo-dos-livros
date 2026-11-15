@@ -1,76 +1,45 @@
-# Sistema Web de Gerenciamento de Biblioteca e Histórico do Acervo
+# Sistema Web de Gerenciamento de Biblioteca — Grupo 1
 
-Protótipo acadêmico em Java 21, Spring Boot 3.5.16, Spring MVC, Thymeleaf, Spring Data JPA, Spring Security e banco relacional H2 em arquivo.
+Este repositório contém os arquivos do projeto acadêmico de gerenciamento de biblioteca e histórico do acervo.
 
-## Executar no Windows
+## Versão corrigida para avaliação
 
-1. Instale um JDK 21 (Eclipse Temurin ou Microsoft OpenJDK).
-2. Abra esta pasta no Visual Studio Code.
-3. Instale as extensões recomendadas: **Extension Pack for Java** e **Spring Boot Extension Pack**.
-4. Abra **Terminal > New Terminal** e execute:
+**Para consultar a entrega atualizada, acesse a pasta [`entrega-eduardo/`](entrega-eduardo/).** Ela reúne a publicação complementar com o projeto atualizado, o pacote de código-fonte e o guia de instalação e execução.
+
+Dentro de `entrega-eduardo/` estão disponíveis:
+
+- [`README.md`](entrega-eduardo/README.md): apresentação da entrega e instruções resumidas.
+- [`Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip`](entrega-eduardo/Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip): código-fonte completo atualizado e configuração do banco.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf`](entrega-eduardo/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf): guia passo a passo para preparar o ambiente e executar a aplicação.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx`](entrega-eduardo/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx): versão editável do guia.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md`](entrega-eduardo/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md): versão em Markdown do guia.
+
+## Principais atualizações da entrega individual
+
+- Configuração do **MySQL 8.4** como banco de dados principal da aplicação, substituindo o H2 na execução normal.
+- Inclusão de `compose.yaml` para inicialização do MySQL com Docker Compose.
+- Manutenção do H2 apenas para os testes automatizados, em memória.
+- Revisão da configuração de autenticação com Spring Security e codificação de senhas com BCrypt.
+- Inclusão de um guia de instalação e execução local para Windows, com Java 21, WSL 2, Docker Desktop, Visual Studio Code, Maven Wrapper e inicialização do banco.
+
+## Como executar a versão atualizada
+
+1. Acesse a pasta `entrega-eduardo/` e baixe o arquivo `Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip`.
+2. Extraia o ZIP.
+3. No VS Code, abra a pasta do projeto que contém `pom.xml`, `mvnw.cmd` e `compose.yaml` (dentro da estrutura extraída).
+4. Com JDK 21, WSL 2 e Docker Desktop instalados e iniciados, abra um terminal nessa pasta e execute:
 
 ```powershell
+docker compose up -d mysql
+docker compose ps
+.\mvnw.cmd clean test
 .\mvnw.cmd spring-boot:run
 ```
 
-Na primeira execução, `mvnw.cmd` baixa Apache Maven 3.9.11 para o perfil do Windows. O Maven também baixa as dependências do projeto pela internet.
+5. Aguarde o serviço MySQL apresentar estado `healthy` e acesse `http://localhost:8080`.
 
-5. Acesse http://localhost:8080. Para parar, pressione `Ctrl + C` no terminal.
+O guia em PDF, disponível em `entrega-eduardo/`, contém o procedimento detalhado e orientações para resolver problemas comuns de instalação e conexão.
 
-## Conta inicial de funcionário
+## Observação sobre as versões e o histórico
 
-- E-mail: `admin@biblioteca.local`
-- CPF: `00000000000`
-- Senha: `Biblioteca123!`
-
-Altere as credenciais para uma demonstração compartilhada. A conta é criada automaticamente se ainda não houver funcionário cadastrado.
-
-## Banco de dados
-
-H2 é um banco SQL relacional. O arquivo fica na pasta `data/` e permanece salvo entre execuções. Não apague a pasta se quiser preservar cadastros.
-
-Console local: http://localhost:8080/h2-console
-- JDBC URL: `jdbc:h2:file:./data/biblioteca`
-- User Name: `sa`
-- Password: (em branco)
-
-Console habilitado apenas para desenvolvimento local; não publique assim em produção.
-
-## Organização
-
-- `domain/`: entidades JPA (classes de domínio).
-- `repository/`: interfaces de persistência Spring Data JPA.
-- `service/`: regras de negócio.
-- `controller/`: controladores MVC.
-- `web/`: formulários/DTOs de entrada.
-- `src/main/resources/templates/`: páginas Thymeleaf.
-- `src/main/resources/static/`: CSS e JavaScript.
-
-## Funcionalidades implementadas
-
-- Livros, autores, editoras e exemplares (RF01–RF04).
-- Pesquisa por título, autor, editora e ISBN (RF05).
-- Histórico de cadastro/entrada, empréstimo, devolução, manutenção e descarte (RF06).
-- Empréstimos com prazo escolhido pelo funcionário e mudança do estado do exemplar (RF07).
-- Devolução, registro de avaria e indicação de atraso (RF08).
-- Cadastro de usuário comum e de funcionário (RF09–RF10).
-- Login usando e-mail ou CPF; áreas administrativas restritas a funcionário.
-- Recursos de acessibilidade: seletor de idioma, leitura por voz do navegador, modo escuro, alto contraste e ajuste de fonte (RNF06).
-
-## Comandos úteis
-
-```powershell
-.\mvnw.cmd clean test
-.\mvnw.cmd clean package
-java -jar target\biblioteca-1.0.0.jar
-```
-
-## Limitações conhecidas deste protótipo
-
-- O seletor de idioma traduz navegação e controles de acessibilidade; nem todo o texto das páginas está internacionalizado.
-- A leitura em voz depende do suporte e das vozes do navegador/sistema operacional.
-- O limite de resposta inferior a 10 s (RNF04) não foi medido; deve ser testado no computador/rede da demonstração.
-- O H2 é local e adequado ao protótipo. O banco não é compartilhado automaticamente entre os computadores do grupo.
-- Antes de uso real, seriam necessários testes, validação de CPF/CNPJ/ISBN mais rigorosa, política de senha, backup, privacidade e revisão de segurança.
-
-Veja `docs/MAPA_DE_REQUISITOS.md` e `docs/INTEGRACAO_DOS_MODULOS.md`.
+Os arquivos que já estavam na raiz do repositório foram preservados. Para a avaliação da versão corrigida e da documentação complementar, consulte a pasta `entrega-eduardo/` indicada acima. O histórico de commits registra as publicações realizadas no GitHub, porém a análise da participação individual no desenvolvimento deve considerar também as atividades efetivamente realizadas e os demais registros disponíveis.

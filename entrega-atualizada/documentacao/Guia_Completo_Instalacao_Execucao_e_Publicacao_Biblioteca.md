@@ -7,7 +7,7 @@
 
 Este documento reúne os procedimentos para preparar um computador Windows, instalar as ferramentas necessárias, iniciar o banco MySQL e executar a aplicação localmente. Também descreve uma forma transparente de publicar esta versão no repositório do grupo sem apagar o histórico já existente.
 
-> **Importante:** esta versão usa MySQL 8.4 para a execução normal da aplicação. O H2 permanece apenas nos testes automatizados, em memória. A versão anterior do projeto que está na raiz histórica do repositório pode ainda mencionar H2; confira a pasta `entrega-eduardo/projeto-mysql` para esta versão atualizada.
+> **Importante:** esta versão usa MySQL 8.4 para a execução normal da aplicação. O H2 permanece apenas nos testes automatizados, em memória. A versão anterior do projeto que está na raiz histórica do repositório pode ainda mencionar H2; confira a pasta `entrega-atualizada/projeto-mysql` para esta versão atualizada.
 
 ## 1. Visão geral da aplicação
 
@@ -215,7 +215,7 @@ docker compose up -d mysql
 
 ### 15.1. Situação do repositório
 
-Na consulta realizada em 15/11/2026, o repositório público do Grupo 1 apresentava uma branch (`main`) e cinco commits. A página principal ainda descrevia a versão com H2. Para evitar apagar o histórico e para distinguir a versão atualizada, recomenda-se adicionar uma pasta própria, por exemplo `entrega-eduardo/`, contendo o projeto MySQL e o guia.
+Na consulta realizada em 15/11/2026, o repositório público do Grupo 1 apresentava uma branch (`main`) e cinco commits. A página principal ainda descrevia a versão com H2. Para evitar apagar o histórico e para distinguir a versão atualizada, recomenda-se adicionar uma pasta própria, por exemplo `entrega-atualizada/`, contendo o projeto MySQL e o guia.
 
 **Não apague os commits existentes nem tente atribuir retroativamente commits de outra pessoa à sua conta.** O histórico deve permanecer íntegro. Os novos commits registrarão as alterações efetivamente enviadas pela conta autenticada.
 
@@ -241,13 +241,13 @@ Com Git instalado, abra o PowerShell em uma pasta onde deseja manter a cópia lo
 ```powershell
 git clone https://github.com/Mar77hk/Acervo-de-uma-biblioteca-com-emprestimo-dos-livros.git
 cd Acervo-de-uma-biblioteca-com-emprestimo-dos-livros
-git switch -c entrega-eduardo
+git switch -c entrega-atualizada
 ```
 
 Copie a pasta do projeto MySQL atualizado para dentro do repositório clonado, com uma estrutura semelhante a:
 
 ```text
-entrega-eduardo/
+entrega-atualizada/
   README.md
   projeto-mysql/
     pom.xml
@@ -264,16 +264,16 @@ Depois, revise os arquivos e envie:
 
 ```powershell
 git status
-git add entrega-eduardo
-git commit -m "Adiciona versão MySQL e guia de execução - Eduardo"
-git push -u origin entrega-eduardo
+git add entrega-atualizada
+git commit -m "Adiciona versão MySQL e guia de execução - atualizada"
+git push -u origin entrega-atualizada
 ```
 
-A branch poderá ser vista em `https://github.com/Mar77hk/Acervo-de-uma-biblioteca-com-emprestimo-dos-livros/tree/entrega-eduardo`.
+A branch poderá ser vista em `https://github.com/Mar77hk/Acervo-de-uma-biblioteca-com-emprestimo-dos-livros/tree/entrega-atualizada`.
 
 ### 15.4. Manter o link do AVA apontando para `main`
 
-Se o link do AVA aponta para `/tree/main`, os arquivos enviados apenas à branch `entrega-eduardo` não aparecem na visualização `main`. Para manter o link do AVA inalterado, abra o repositório no GitHub, crie um Pull Request de `entrega-eduardo` para `main` e, depois da revisão/aprovação necessária, faça o merge. Após o merge, a pasta também aparecerá em `main` e o link original continuará funcionando.
+Se o link do AVA aponta para `/tree/main`, os arquivos enviados apenas à branch `entrega-atualizada` não aparecem na visualização `main`. Para manter o link do AVA inalterado, abra o repositório no GitHub, crie um Pull Request de `entrega-atualizada` para `main` e, depois da revisão/aprovação necessária, faça o merge. Após o merge, a pasta também aparecerá em `main` e o link original continuará funcionando.
 
 Se não for possível fazer merge por falta de permissão, mantenha a branch e envie ao professor o link direto dela ou solicite que a pessoa proprietária do repositório aprove o Pull Request.
 

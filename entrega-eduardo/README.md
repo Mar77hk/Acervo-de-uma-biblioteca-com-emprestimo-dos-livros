@@ -1,4 +1,4 @@
-# Entrega individual - versão MySQL
+# Entrega - versão MySQL
 
 Esta pasta contém a versão atualizada do Sistema Web de Gerenciamento de Biblioteca.
 

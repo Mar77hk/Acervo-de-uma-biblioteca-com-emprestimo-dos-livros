@@ -6,7 +6,7 @@ Este repositório contém os arquivos do projeto acadêmico de gerenciamento de 
 
 **Para consultar a entrega atualizada, acesse a pasta [`entrega-atualizada/`](entrega-atualizada/).** Ela reúne a publicação complementar com o projeto atualizado, o pacote de código-fonte e o guia de instalação e execução.
 
-Dentro de `entrega-eduardo/` estão disponíveis:
+Dentro de `entrega-atualizada/` estão disponíveis:
 
 - [`README.md`](entrega-atualizada/README.md): apresentação da entrega e instruções resumidas.
 - [`Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip`](entrega-atualizada/Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip): código-fonte completo atualizado e configuração do banco.

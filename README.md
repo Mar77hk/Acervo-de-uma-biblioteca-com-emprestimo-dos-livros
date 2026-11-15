@@ -1,85 +1,113 @@
-# Sistema Web de Gerenciamento de Biblioteca e Histórico do Acervo
+# Sistema Web de Gerenciamento de Biblioteca
 
-Protótipo acadêmico em Java 21, Spring Boot 3.5.16, Spring MVC, Thymeleaf, Spring Data JPA e Spring Security. A aplicação usa MySQL 8.4 com persistência em volume Docker; H2 é usado somente nos testes.
+Protótipo acadêmico para gerenciamento de acervo, usuários e empréstimos. O projeto usa Java 21, Spring Boot, Spring MVC, Thymeleaf, Spring Data JPA, Spring Security e MySQL 8.4. O banco H2 é usado somente nos testes automatizados.
 
-## Executar no Windows
+## Como executar no Windows e no VS Code
 
-Consulte o roteiro completo em [`docs/EXECUCAO_LOCAL.md`](docs/EXECUCAO_LOCAL.md). Em resumo:
+### 1. Instale os pré-requisitos
 
-1. Instale JDK 21, Docker Desktop e Visual Studio Code com Extension Pack for Java.
-2. Abra no VS Code a pasta que contém `pom.xml` e `compose.yaml`.
-3. Inicie o banco MySQL 8.4 e aguarde o serviço ficar saudável:
+- JDK 21. Confira no PowerShell com `java -version`.
+- Docker Desktop, aberto e em execução.
+- Visual Studio Code com a extensão **Extension Pack for Java**.
+- Acesso à internet na primeira execução, para baixar Maven e as dependências.
+
+### 2. Abra a pasta correta
+
+No VS Code, abra a pasta raiz do projeto, ou seja, a pasta que contém `pom.xml`, `mvnw.cmd`, `compose.yaml` e `src`.
+
+Se você abriu o ZIP fornecido, essa pasta é `biblioteca-projeto-completo`. Se clonou este repositório, abra a pasta clonada.
+
+### 3. Inicie o banco MySQL
+
+Abra o terminal integrado do VS Code nessa pasta e execute:
 
 ```powershell
 docker compose up -d mysql
 docker compose ps
 ```
 
-4. Inicie a aplicação pelo botão **Run** da classe `BibliotecaApplication` no VS Code, ou pelo terminal:
+Espere o serviço `mysql` aparecer como `healthy` antes de iniciar a aplicação. O Compose cria o banco `biblioteca` e o usuário local de demonstração.
+
+### 4. Inicie a aplicação
+
+No VS Code, abra `src/main/java/br/edu/ufscar/biblioteca/BibliotecaApplication.java` e clique em **Run** acima do método `main`.
+
+Ou execute pelo terminal integrado:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-5. Acesse http://localhost:8080. Os dados ficam no volume Docker `biblioteca_mysql_data`.
+Na primeira execução, o Maven baixa as dependências; esse processo pode levar alguns minutos. Quando o servidor iniciar, abra [http://localhost:8080](http://localhost:8080).
 
-Para usar outro servidor MySQL, configure `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`; `DB_DRIVER` pode ser informado se necessário.
+Para encerrar a aplicação, volte ao terminal e pressione `Ctrl + C`.
 
-## Conta inicial de funcionário
+### 5. Entre no sistema
 
-- E-mail: `admin@biblioteca.local`
-- CPF: `00000000000`
-- Senha: `Biblioteca123!`
+Na primeira execução, o sistema cria um funcionário de demonstração caso ainda não exista nenhum funcionário no banco:
 
-A conta é criada automaticamente se ainda não houver funcionário cadastrado. Essas credenciais são apenas para demonstração local e devem ser alteradas antes de qualquer implantação pública.
+| Campo | Valor |
+|---|---|
+| E-mail | `admin@biblioteca.local` |
+| CPF | `00000000000` |
+| Senha | `Biblioteca123!` |
 
-## Banco de dados
+Use o e-mail ou CPF para entrar. A senha é armazenada com hash BCrypt. Essas credenciais são apenas para demonstração local; altere-as antes de qualquer implantação pública.
 
-A aplicação usa MySQL 8.4 por padrão, com dados persistidos no volume Docker `biblioteca_mysql_data`. As credenciais padrão servem apenas para demonstração local. Em outro ambiente, configure `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`.
+## Banco de dados e preservação dos dados
 
-H2 é usado exclusivamente pelos testes automatizados em um banco em memória; não é usado para persistência da aplicação.
+A aplicação usa MySQL 8.4. O Docker Compose mantém os registros no volume `biblioteca_mysql_data`; parar ou recriar o contêiner não apaga esse volume.
 
-## Organização
+Para parar o banco sem remover o volume:
 
-- `domain/`: entidades JPA.
-- `repository/`: interfaces de persistência Spring Data JPA.
-- `service/`: regras de negócio.
-- `controller/`: controladores MVC.
-- `web/`: formulários/DTOs de entrada.
-- `src/main/resources/templates/`: páginas Thymeleaf.
-- `src/main/resources/static/`: CSS e JavaScript.
-- `docs/EXECUCAO_LOCAL.md`: roteiro para executar o projeto em outro computador.
+```powershell
+docker compose down
+```
 
-## Funcionalidades implementadas
+**Não use `docker compose down -v`** se quiser manter os dados: a opção `-v` apaga os volumes do projeto.
 
-- Livros, autores, editoras e exemplares (RF01–RF04).
-- Pesquisa por título, autor, editora e ISBN (RF05).
-- Histórico de cadastro/entrada, empréstimo, devolução, manutenção e descarte (RF06).
-- Empréstimos com prazo escolhido pelo funcionário e mudança do estado do exemplar (RF07).
-- Devolução, registro de avaria e indicação de atraso (RF08).
-- Cadastro de usuário comum e de funcionário (RF09–RF10).
-- Login usando e-mail ou CPF, Spring Security e áreas administrativas restritas a funcionário.
-- Senhas armazenadas com hash BCrypt.
-- Recursos de acessibilidade: seletor de idioma, leitura por voz do navegador, modo escuro, alto contraste e ajuste de fonte (RNF06).
+O projeto foi atualizado de uma configuração antiga com H2 para MySQL. Se você já cadastrou dados no arquivo H2 `data/biblioteca.mv.db`, esse arquivo continua separado e não é importado automaticamente para o MySQL. Faça uma migração antes de descartar o arquivo, caso precise desses registros.
 
-## Comandos úteis
+As credenciais presentes em `application.properties` e `compose.yaml` servem apenas para desenvolvimento local. Para conectar a outro servidor MySQL, defina as variáveis antes de iniciar a aplicação:
+
+```powershell
+$env:DB_URL = "jdbc:mysql://localhost:3306/biblioteca?serverTimezone=America/Sao_Paulo"
+$env:DB_USERNAME = "seu_usuario"
+$env:DB_PASSWORD = "sua_senha"
+.\mvnw.cmd spring-boot:run
+```
+
+## Testes
+
+Os testes usam H2 em memória e não precisam de Docker nem de um servidor MySQL. Execute:
 
 ```powershell
 .\mvnw.cmd clean test
-.\mvnw.cmd clean package
-java -jar target\biblioteca-1.0.0.jar
 ```
 
-A execução normal exige MySQL ativo. Os testes usam H2 em memória e não precisam iniciar o MySQL.
+## Solução de problemas
 
-## Limitações conhecidas deste protótipo
+- **O MySQL ainda não iniciou:** abra o Docker Desktop e confira `docker compose ps`. Só inicie a aplicação quando o serviço `mysql` estiver `healthy`.
+- **A porta 3306 já está em uso:** encerre o outro serviço MySQL ou altere a porta em `compose.yaml` e a URL do banco em `application.properties`.
+- **A porta 8080 já está em uso:** encerre a outra aplicação ou altere `server.port` em `application.properties`.
+- **O terminal diz que `mvnw.cmd` não existe:** confira se o terminal está na pasta que contém `pom.xml` e `mvnw.cmd`.
 
-- O seletor de idioma traduz navegação e controles de acessibilidade; nem todo o texto das páginas está internacionalizado.
-- A leitura em voz depende do suporte e das vozes do navegador/sistema operacional.
-- O limite de resposta inferior a 10 s (RNF04) não foi medido; deve ser testado no computador/rede da demonstração.
-- O banco MySQL não é compartilhado automaticamente entre computadores diferentes; para uma base compartilhada, é necessário hospedar o servidor MySQL em local acessível ao grupo.
-- Antes de uso real, seriam necessários testes, validação de CPF/CNPJ/ISBN mais rigorosa, política de senha, backup, privacidade e revisão de segurança.
+## Funcionalidades
 
-A participação dos integrantes deve ser comprovada no histórico do repositório Git remoto. O ZIP de entrega não inclui a pasta `.git`. Consulte o roteiro para os comandos de conferência dos commits.
+- Cadastro e pesquisa de livros, autores, editoras e exemplares.
+- Histórico de cadastros, empréstimos, devoluções, manutenção e descarte.
+- Empréstimos e devoluções com registro de atrasos e avarias.
+- Login por e-mail ou CPF, autorização de áreas administrativas por perfil e senhas protegidas com BCrypt.
+- Acessibilidade com seletor de idioma, leitura por voz, modo escuro, alto contraste e ajuste de fonte.
 
-Veja também `docs/MAPA_DE_REQUISITOS.md` e `docs/INTEGRACAO_DOS_MODULOS.md`.
+## Organização do código
+
+- `domain/`: entidades JPA.
+- `repository/`: interfaces Spring Data JPA.
+- `service/`: regras de negócio.
+- `controller/`: controladores MVC.
+- `web/`: formulários e DTOs.
+- `src/main/resources/templates/`: páginas Thymeleaf.
+- `src/main/resources/static/`: CSS e JavaScript.
+- `docs/EXECUCAO_LOCAL.md`: roteiro detalhado de execução.
+- `docs/MAPA_DE_REQUISITOS.md` e `docs/INTEGRACAO_DOS_MODULOS.md`: documentação do projeto.

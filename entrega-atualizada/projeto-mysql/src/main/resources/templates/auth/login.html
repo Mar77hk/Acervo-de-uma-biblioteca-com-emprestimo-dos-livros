@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="loginPageTitle">Entrar</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <div th:replace="~{fragments :: messages}"></div>
+  <section class="panel">
+    <p class="eyebrow" data-i18n="loginEyebrow">ACESSO AO SISTEMA</p>
+    <h1 data-i18n="loginHeading">Entrar</h1>
+    <div class="alert error" th:if="${param.erro}" data-i18n="loginError">Identificador ou senha inválidos.</div>
+    <form th:action="@{/login}" method="post" class="form-grid">
+      <label><span data-i18n="loginEmailLabel">E-mail ou CPF</span>
+        <input name="identificador" required autocomplete="username" placeholder="Seu e-mail ou CPF" data-i18n-placeholder="loginEmailPlaceholder">
+      </label>
+      <label><span data-i18n="loginPasswordLabel">Senha</span>
+        <input type="password" name="senha" required autocomplete="current-password">
+      </label>
+      <button class="button primary" type="submit" data-i18n="loginSubmit">Entrar</button>
+    </form>
+    <p class="muted"><span data-i18n="loginNoAccount">Ainda não tem cadastro?</span> <a th:href="@{/cadastro}" data-i18n="loginRegisterLink">Cadastre-se</a>.</p>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div>
+<script th:src="@{/js/accessibility.js}"></script>
+</body>
+</html>

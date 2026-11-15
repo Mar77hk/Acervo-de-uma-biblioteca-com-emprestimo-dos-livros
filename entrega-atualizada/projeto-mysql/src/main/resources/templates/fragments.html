@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header" class="site-header">
+  <a class="brand" th:href="@{/}"><span data-i18n="brandLibrary">Biblioteca</span> <span data-i18n="brandCollection">Acervo</span></a>
+  <nav class="main-nav" aria-label="Navegação principal" data-i18n-aria-label="mainNavLabel">
+    <a th:href="@{/}" data-i18n="navHome">Início</a>
+    <a th:href="@{/livros}" data-i18n="navBooks">Pesquisar livros</a>
+    <a th:if="${isFuncionario}" th:href="@{/admin/livros/novo}" data-i18n="navNewBook">Cadastrar livro</a>
+    <a th:if="${isFuncionario}" th:href="@{/autores}" data-i18n="navAuthors">Autores</a>
+    <a th:if="${isFuncionario}" th:href="@{/editoras}" data-i18n="navPublishers">Editoras</a>
+    <a th:if="${isFuncionario}" th:href="@{/exemplares}" data-i18n="navCopies">Exemplares</a>
+    <a th:if="${isFuncionario}" th:href="@{/emprestimos}" data-i18n="navLoans">Empréstimos</a>
+    <a th:if="${isFuncionario}" th:href="@{/historico}" data-i18n="navHistory">Histórico</a>
+    <a th:if="${isFuncionario}" th:href="@{/admin/usuarios}" data-i18n="navUsers">Usuários</a>
+    <a th:if="${!isAuthenticated}" th:href="@{/login}" data-i18n="navLogin">Entrar</a>
+    <a th:if="${!isAuthenticated}" th:href="@{/cadastro}" data-i18n="navRegister">Cadastrar-se</a>
+    <form th:if="${isAuthenticated}" th:action="@{/logout}" method="post" class="logout-form">
+      <button class="link-button" type="submit" data-i18n="navLogout">Sair</button>
+    </form>
+  </nav>
+</header>
+
+<section th:fragment="accessibility" class="accessibility" aria-label="Opções de acessibilidade" data-i18n-aria-label="accessibilityLabel">
+  <span data-i18n="accessTitle">Acessibilidade</span>
+  <label for="languageSelect" class="sr-only" data-i18n="languageLabel">Idioma</label>
+  <select id="languageSelect" aria-label="Idioma" data-i18n-aria-label="languageLabel">
+    <option value="pt" data-i18n="languagePt">Português</option>
+    <option value="en" data-i18n="languageEn">English</option>
+    <option value="es" data-i18n="languageEs">Español</option>
+  </select>
+  <button type="button" id="fontDecrease" aria-label="Diminuir fonte" data-i18n-aria-label="fontDecreaseLabel">A−</button>
+  <button type="button" id="fontIncrease" aria-label="Aumentar fonte" data-i18n-aria-label="fontIncreaseLabel">A+</button>
+  <button type="button" id="darkToggle" data-i18n="darkMode">Modo escuro</button>
+  <button type="button" id="contrastToggle" data-i18n="contrast">Alto contraste</button>
+  <button type="button" id="speakButton" data-i18n="readPage">Ler página</button>
+</section>
+
+<div th:fragment="messages" class="messages">
+  <div class="alert success" th:if="${sucesso}" th:text="${sucesso}"></div>
+  <div class="alert error" th:if="${erro}" th:text="${erro}"></div>
+</div>
+
+<footer th:fragment="footer" class="site-footer" data-i18n="footerText">Sistema Web de Gerenciamento de Biblioteca e Histórico do Acervo · Protótipo acadêmico</footer>
+</body>
+</html>

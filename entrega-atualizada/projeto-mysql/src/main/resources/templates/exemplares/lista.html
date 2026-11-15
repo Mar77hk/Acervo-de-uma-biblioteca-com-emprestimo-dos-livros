@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="copiesPageTitle">Exemplares</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="physicalCollection">ACERVO FÍSICO</p><h1 data-i18n="copiesHeading">Exemplares</h1><p data-i18n="copiesDescription">Unidades físicas cadastradas para os livros.</p></div><a class="button primary" th:href="@{/admin/livros/novo}" data-i18n="registerCopies">Cadastrar exemplares</a></div>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="codeColumn">Código</th><th data-i18n="bookColumn">Livro</th><th data-i18n="stateColumn">Estado</th><th data-i18n="observationsColumn">Observações</th><th data-i18n="actionsColumn">Ações</th></tr></thead>
+    <tbody>
+      <tr th:each="ex : ${exemplares}">
+        <td th:text="${ex.codigoPatrimonio}"></td><td th:text="${ex.livro.titulo}"></td>
+        <td><span class="status" th:text="${ex.estado}" data-i18n-enum></span></td>
+        <td th:text="${ex.observacoes != null ? ex.observacoes : '-'}"></td>
+        <td class="actions" th:if="${ex.estado.name() != 'EMPRESTADO' and ex.estado.name() != 'DESCARTADO'}">
+          <form th:action="@{/exemplares/{id}/manutencao(id=${ex.id})}" method="post"><input type="hidden" name="observacao" value="Manutenção registrada pelo funcionário"><button class="button small secondary" type="submit" data-i18n="maintenance">Manutenção</button></form>
+          <form th:action="@{/exemplares/{id}/descartar(id=${ex.id})}" method="post" data-i18n-confirm="discardConfirm"><input type="hidden" name="observacao" value="Descarte registrado pelo funcionário"><button class="button small danger" type="submit" data-i18n="discard">Descartar</button></form>
+        </td>
+        <td th:if="${ex.estado.name() == 'EMPRESTADO' or ex.estado.name() == 'DESCARTADO'}">—</td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(exemplares)}"><td colspan="5" class="empty" data-i18n="copiesEmpty">Nenhum exemplar cadastrado.</td></tr>
+    </tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

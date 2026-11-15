@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="publisherFormPageTitle">Cadastro de editora</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow"><section class="panel">
+  <p class="eyebrow" data-i18n="registrations">CADASTROS</p>
+  <h1 th:attr="data-i18n=${editora.id == null ? 'publisherNewTitle' : 'publisherEditTitle'}" th:text="${editora.id == null ? 'Nova editora' : 'Editar editora'}"></h1>
+  <form th:action="@{/editoras/salvar}" th:object="${editora}" method="post" class="form-grid">
+    <input type="hidden" th:field="*{id}">
+    <label><span data-i18n="publisherCompanyName">Razão social</span><input th:field="*{razaoSocial}" required><small class="field-error" th:errors="*{razaoSocial}"></small></label>
+    <label><span data-i18n="cnpjLabel">CNPJ (14 números)</span><input th:field="*{cnpj}" inputmode="numeric" maxlength="14" required><small class="field-error" th:errors="*{cnpj}"></small></label>
+    <label><span data-i18n="addressLabel">Endereço</span><input th:field="*{endereco}" required><small class="field-error" th:errors="*{endereco}"></small></label>
+    <label><span data-i18n="cityLabel">Cidade</span><input th:field="*{cidade}" required><small class="field-error" th:errors="*{cidade}"></small></label>
+    <div class="form-actions"><button class="button primary" type="submit" data-i18n="save">Salvar</button><a class="button secondary" th:href="@{/editoras}" data-i18n="cancel">Cancelar</a></div>
+  </form>
+</section></main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

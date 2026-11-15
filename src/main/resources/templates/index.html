@@ -18,7 +18,7 @@
     <article class="card" th:if="${isFuncionario}"><h2 data-i18n="historyCard">Histórico</h2><p data-i18n="historyCardDescription">Consulte as movimentações realizadas no acervo.</p><a th:href="@{/historico}" data-i18n="viewMovements">Ver movimentações →</a></article>
     <article class="card" th:if="${!isFuncionario}"><h2 data-i18n="registrationCard">Cadastro</h2><p data-i18n="registrationCardDescription">Crie seu cadastro para utilizar os serviços da biblioteca.</p><a th:href="@{/cadastro}" data-i18n="registerUser">Cadastrar usuário →</a></article>
   </section>
-  <section class="note"><strong data-i18n="academicPrototype">Protótipo acadêmico:</strong> <span data-i18n="prototypeDescription">dados armazenados localmente em banco relacional H2. O acesso administrativo deve ser feito por funcionário.</span></section>
+  <section class="note"><strong data-i18n="academicPrototype">Protótipo acadêmico:</strong> <span data-i18n="prototypeDescription">dados persistidos no banco relacional MySQL. O acesso administrativo deve ser feito por funcionário.</span></section>
 </main>
 <div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
 </body></html>

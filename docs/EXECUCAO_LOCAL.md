@@ -1,13 +1,14 @@
 # Roteiro de execucao local — Biblioteca
 
 Este roteiro permite que uma pessoa que recebeu o repositorio execute a aplicacao em outro computador.
-A aplicacao usa Java 21, Spring Boot, Thymeleaf, Spring Security e Spring Data JPA. H2 em arquivo e usado por padrao; MySQL e opcional.
+A aplicacao usa Java 21, Spring Boot, Thymeleaf, Spring Security, Spring Data JPA e MySQL 8.4. H2 e usado somente nos testes automatizados.
 
 ## 1. Pre-requisitos
 
 - Windows 10/11 (os comandos abaixo usam PowerShell).
 - JDK 21 instalado. Confira com `java -version`.
-- Visual Studio Code (ou outra IDE Java).
+- Visual Studio Code com Extension Pack for Java (ou outra IDE Java).
+- Docker Desktop em execucao, para iniciar o MySQL 8.4.
 - Acesso a internet na primeira compilacao, para baixar Maven e dependencias.
 
 ## 2. Abrir o projeto
@@ -16,11 +17,20 @@ A aplicacao usa Java 21, Spring Boot, Thymeleaf, Spring Security e Spring Data J
 2. No VS Code, use **File → Open Folder** e abra a pasta `biblioteca-projeto-completo`, onde estao `pom.xml`, `mvnw.cmd`, `compose.yaml` e `src`.
 3. Instale as extensoes **Extension Pack for Java** e **Spring Boot Extension Pack**, caso ainda nao estejam instaladas.
 
-## 3. Executar no VS Code
+## 3. Iniciar o MySQL
 
-O banco H2 local e criado automaticamente, sem Docker ou instalacao de MySQL. No VS Code:
+Na pasta que contem `compose.yaml`, inicie o banco:
 
-1. Abra a pasta `biblioteca-projeto-completo`, onde estao `pom.xml`, `mvnw.cmd` e `src`.
+```powershell
+docker compose up -d mysql
+docker compose ps
+```
+
+Aguarde o servico `mysql` ficar `healthy`. O Compose cria o banco `biblioteca`, o usuario local de demonstracao e o volume persistente `biblioteca_mysql_data`.
+
+## 4. Executar no VS Code
+
+1. Abra a pasta `biblioteca-projeto-completo`, onde estao `pom.xml`, `mvnw.cmd`, `compose.yaml` e `src`.
 2. Instale a extensao **Extension Pack for Java**.
 3. Abra `src/main/java/br/edu/ufscar/biblioteca/BibliotecaApplication.java` e clique em **Run** acima do metodo `main`.
 
@@ -30,13 +40,9 @@ Tambem e possivel iniciar pelo terminal integrado, nessa mesma pasta:
 .\mvnw.cmd spring-boot:run
 ```
 
-A primeira execucao precisa de internet para baixar Maven e as dependencias. Quando o Tomcat iniciar na porta 8080, acesse `http://localhost:8080`. O banco fica em `data/biblioteca.mv.db`.
+A primeira execucao precisa de internet para baixar Maven e dependencias. Quando o Tomcat iniciar na porta 8080, acesse `http://localhost:8080`.
 
-Para encerrar, volte ao terminal e pressione `Ctrl + C`.
-
-## 4. MySQL opcional
-
-Se preferir MySQL, inicie-o com `docker compose up -d mysql` e configure `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` e `DB_DRIVER=com.mysql.cj.jdbc.Driver` antes de executar. O Compose cria o usuario e o volume persistente descritos em `compose.yaml`.
+Para encerrar a aplicacao, volte ao terminal e pressione `Ctrl + C`.
 
 ## 5. Primeiro acesso
 
@@ -52,7 +58,7 @@ Entre pela tela **Entrar** usando o e-mail ou o CPF. A senha e armazenada com BC
 
 ## 6. Persistencia e encerramento do banco
 
-Os dados do MySQL ficam no volume Docker `biblioteca_mysql_data` e continuam disponiveis depois que o container e parado.
+A persistencia principal e feita no SGBD MySQL 8.4; os dados do MySQL ficam no volume Docker `biblioteca_mysql_data` e continuam disponiveis depois que o container e parado.
 
 Para parar o container sem apagar os dados:
 
@@ -89,7 +95,7 @@ O ZIP de entrega nao contem a pasta `.git`; portanto, ele nao carrega o historic
 
 ## 9. Configurar outro servidor MySQL
 
-Por padrao, a aplicacao usa `localhost:3306`, banco `biblioteca`, usuario `biblioteca` e a senha local definida em `application.properties`. Para usar outro servidor, configure as variaveis de ambiente `DB_URL`, `DB_USERNAME` e `DB_PASSWORD` antes de iniciar a aplicacao. Exemplo no PowerShell:
+Por padrao, a aplicacao usa `localhost:3306`, banco `biblioteca`, usuario `biblioteca` e a senha local definida em `application.properties`. Para usar outro servidor MySQL, configure as variaveis de ambiente `DB_URL`, `DB_USERNAME` e `DB_PASSWORD` antes de iniciar a aplicacao. Exemplo no PowerShell:
 
 ```powershell
 $env:DB_URL = "jdbc:mysql://localhost:3306/biblioteca?useSSL=true&serverTimezone=America/Sao_Paulo"
@@ -98,7 +104,7 @@ $env:DB_PASSWORD = "sua_senha"
 .\mvnw.cmd spring-boot:run
 ```
 
-Em ambientes compartilhados ou de producao, use credenciais proprias, conexao protegida por TLS e um usuario de banco com permissao apenas sobre o schema da aplicacao.
+Em ambientes compartilhados ou de producao, use credenciais proprias, conexao protegida por TLS e um usuario de banco com permissao apenas sobre o schema da aplicacao. O H2 e usado somente pelos testes, em memoria.
 
 ## Observacao sobre dados anteriores
 

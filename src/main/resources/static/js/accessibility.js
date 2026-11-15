@@ -128,7 +128,7 @@
       viewMovements: 'Ver movimentações →', registrationCard: 'Cadastro',
       registrationCardDescription: 'Crie seu cadastro para utilizar os serviços da biblioteca.',
       registerUser: 'Cadastrar usuário →', academicPrototype: 'Protótipo acadêmico:',
-      prototypeDescription: 'dados armazenados localmente em banco relacional H2. O acesso administrativo deve ser feito por funcionário.'
+      prototypeDescription: 'dados persistidos em banco relacional MySQL. O acesso administrativo deve ser feito por funcionário.'
     },
 
     en: {
@@ -252,7 +252,7 @@
       viewMovements: 'View movements →', registrationCard: 'Registration',
       registrationCardDescription: 'Create an account to use the library services.',
       registerUser: 'Register user →', academicPrototype: 'Academic prototype:',
-      prototypeDescription: 'data is stored locally in an H2 relational database. Administrative access must be performed by a staff member.'
+      prototypeDescription: 'data is persisted in a MySQL relational database. Administrative access must be performed by a staff member.'
     },
 
     es: {
@@ -376,7 +376,7 @@
       viewMovements: 'Ver movimientos →', registrationCard: 'Registro',
       registrationCardDescription: 'Cree su cuenta para utilizar los servicios de la biblioteca.',
       registerUser: 'Registrar usuario →', academicPrototype: 'Prototipo académico:',
-      prototypeDescription: 'datos almacenados localmente en una base de datos relacional H2. El acceso administrativo debe ser realizado por un empleado.'
+      prototypeDescription: 'datos persistidos en una base de datos relacional MySQL. El acceso administrativo debe ser realizado por un empleado.'
     }
   };
 

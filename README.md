@@ -1,22 +1,29 @@
 # Sistema Web de Gerenciamento de Biblioteca e Histórico do Acervo
 
-Protótipo acadêmico em Java 21, Spring Boot 3.5.16, Spring MVC, Thymeleaf, Spring Data JPA e Spring Security. Por padrão, usa H2 local; MySQL é opcional.
+Protótipo acadêmico em Java 21, Spring Boot 3.5.16, Spring MVC, Thymeleaf, Spring Data JPA e Spring Security. A aplicação usa MySQL 8.4 com persistência em volume Docker; H2 é usado somente nos testes.
 
 ## Executar no Windows
 
 Consulte o roteiro completo em [`docs/EXECUCAO_LOCAL.md`](docs/EXECUCAO_LOCAL.md). Em resumo:
 
-1. Instale JDK 21 e Visual Studio Code com Extension Pack for Java.
+1. Instale JDK 21, Docker Desktop e Visual Studio Code com Extension Pack for Java.
 2. Abra no VS Code a pasta que contém `pom.xml` e `compose.yaml`.
-3. Inicie a aplicação pelo botão **Run** da classe `BibliotecaApplication` no VS Code, ou pelo terminal:
+3. Inicie o banco MySQL 8.4 e aguarde o serviço ficar saudável:
+
+```powershell
+docker compose up -d mysql
+docker compose ps
+```
+
+4. Inicie a aplicação pelo botão **Run** da classe `BibliotecaApplication` no VS Code, ou pelo terminal:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-4. Acesse http://localhost:8080. O banco H2 é criado automaticamente em `data/biblioteca.mv.db`.
+5. Acesse http://localhost:8080. Os dados ficam no volume Docker `biblioteca_mysql_data`.
 
-Docker/MySQL é opcional. Para usar MySQL, configure `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` e `DB_DRIVER=com.mysql.cj.jdbc.Driver`.
+Para usar outro servidor MySQL, configure `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`; `DB_DRIVER` pode ser informado se necessário.
 
 ## Conta inicial de funcionário
 
@@ -28,11 +35,9 @@ A conta é criada automaticamente se ainda não houver funcionário cadastrado. 
 
 ## Banco de dados
 
-A aplicação usa H2 em arquivo por padrão e mantém os dados em `data/biblioteca.mv.db`. O `compose.yaml` permite usar MySQL 8.4 opcionalmente.
+A aplicação usa MySQL 8.4 por padrão, com dados persistidos no volume Docker `biblioteca_mysql_data`. As credenciais padrão servem apenas para demonstração local. Em outro ambiente, configure `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`.
 
-O banco padrão é local e não pede credenciais. Para usar MySQL, configure `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` e `DB_DRIVER=com.mysql.cj.jdbc.Driver`.
-
-Os testes usam H2 em memória.
+H2 é usado exclusivamente pelos testes automatizados em um banco em memória; não é usado para persistência da aplicação.
 
 ## Organização
 
@@ -65,7 +70,7 @@ Os testes usam H2 em memória.
 java -jar target\biblioteca-1.0.0.jar
 ```
 
-A execução normal usa H2 persistente em arquivo e não exige MySQL nem Docker. Os testes usam H2 em memória.
+A execução normal exige MySQL ativo. Os testes usam H2 em memória e não precisam iniciar o MySQL.
 
 ## Limitações conhecidas deste protótipo
 

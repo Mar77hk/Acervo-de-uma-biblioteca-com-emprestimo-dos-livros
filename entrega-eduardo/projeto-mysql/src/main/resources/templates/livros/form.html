@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="bookFormPageTitle">Cadastro de livro</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <div th:replace="~{fragments :: messages}"></div>
+  <section class="panel">
+    <p class="eyebrow" data-i18n="collectionManagement">GERENCIAMENTO DO ACERVO</p>
+    <h1 th:attr="data-i18n=${form.id == null ? 'addBookTitle' : 'editBookTitle'}" th:text="${form.id == null ? 'Cadastrar livro' : 'Editar livro'}"></h1>
+    <form th:action="@{/admin/livros/salvar}" th:object="${form}" method="post" class="form-grid">
+      <input type="hidden" th:field="*{id}">
+      <label><span data-i18n="titleLabel">Título</span><input th:field="*{titulo}" required maxlength="180"><small class="field-error" th:errors="*{titulo}"></small></label>
+      <label><span data-i18n="volumeNumber">Número do volume</span><input type="number" min="1" th:field="*{numeroVolume}" required><small class="field-error" th:errors="*{numeroVolume}"></small></label>
+      <label><span data-i18n="isbnLabel">ISBN</span><input th:field="*{isbn}" required placeholder="Ex.: 978-..." data-i18n-placeholder="isbnPlaceholder" maxlength="20"><small class="field-error" th:errors="*{isbn}"></small></label>
+      <label><span data-i18n="publisherLabel">Editora</span><select th:field="*{editoraId}" required><option value="" data-i18n="selectPublisher">Selecione uma editora</option><option th:each="e : ${editoras}" th:value="${e.id}" th:text="${e.razaoSocial}"></option></select><small class="field-error" th:errors="*{editoraId}"></small><small data-i18n="publisherBeforeBook">Cadastre a editora antes de cadastrar o livro.</small></label>
+      <label><span data-i18n="selectAuthors">Autores (selecione um ou mais)</span><select th:field="*{autoresIds}" multiple size="5"><option th:each="a : ${autores}" th:value="${a.id}" th:text="${a.nome}"></option></select><small class="field-error" th:errors="*{autoresIds}"></small><small data-i18n="multipleAuthorsHint">Para selecionar vários, segure Ctrl enquanto clica.</small></label>
+      <label><span data-i18n="totalCopies">Quantidade total de exemplares desejada</span><input type="number" min="1" th:field="*{quantidadeExemplares}" required><small data-i18n="copiesEditHint">Ao editar, o sistema adiciona exemplares até atingir essa quantidade. Ele não apaga exemplares existentes.</small></label>
+      <div class="form-actions"><button type="submit" class="button primary" data-i18n="saveBook">Salvar livro</button><a class="button secondary" th:href="@{/livros}" data-i18n="cancel">Cancelar</a></div>
+    </form>
+    <div class="note"><strong data-i18n="recommendedOrder">Ordem recomendada:</strong> <span data-i18n="recommendedOrderText">cadastre primeiro autores e editoras; depois cadastre o livro e informe quantos exemplares físicos existem.</span></div>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

@@ -14,11 +14,13 @@
 | RF10 — Cadastro de funcionário | `/admin/usuarios`, restrito a funcionário autenticado. |
 | RNF01 — Navegador | Spring MVC/Thymeleaf via HTTP. |
 | RNF02 — Java | Java 21. |
-| RNF03 — Banco relacional | H2 SQL em arquivo, com JPA/Hibernate. |
+| RNF03 — Banco relacional | MySQL 8.4, com persistência JPA/Hibernate. |
 | RNF04 — Interface responsiva e até 10 s | CSS responsivo; tempo de resposta não foi medido e precisa de teste real. |
-| RNF05 — Persistência | Arquivo de banco H2 salvo em `data/`. |
+| RNF05 — Persistência | MySQL com volume persistente `biblioteca_mysql_data` no ambiente Docker. |
 | RNF06 — Acessibilidade | Ajuste de fonte, modo escuro, alto contraste, leitura pelo navegador e seletor de idioma. A tradução ainda não cobre todos os textos. |
 
 ## Decisões assumidas
 
 O documento não define prazo padrão, multas, reservas nem bloqueio de usuário com empréstimo vencido. Para este protótipo, o funcionário escolhe prazo entre 1 e 90 dias; não há cálculo de multa. Validem essas escolhas com o professor/grupo.
+
+O H2 existe somente no escopo de testes automatizados, em memória. A aplicação executada normalmente utiliza MySQL.

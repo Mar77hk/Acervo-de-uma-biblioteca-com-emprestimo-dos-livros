@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="booksPageTitle">Pesquisar livros</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="collection">ACERVO</p><h1 data-i18n="booksHeading">Pesquisar livros</h1><p data-i18n="searchInstructions">Use um ou mais campos para filtrar os resultados.</p></div><a th:if="${isFuncionario}" class="button primary" th:href="@{/admin/livros/novo}" data-i18n="addBook">+ Cadastrar livro</a></div>
+  <form class="filter-panel" method="get" th:action="@{/livros}">
+    <label><span data-i18n="titleFilter">Título</span><input name="titulo" th:value="${fTitulo}" placeholder="Título do livro" data-i18n-placeholder="bookTitlePlaceholder"></label>
+    <label><span data-i18n="authorFilter">Autor</span><input name="autor" th:value="${fAutor}" placeholder="Nome do autor" data-i18n-placeholder="authorNamePlaceholder"></label>
+    <label><span data-i18n="publisherFilter">Editora</span><input name="editora" th:value="${fEditora}" placeholder="Nome da editora" data-i18n-placeholder="publisherNamePlaceholder"></label>
+    <label><span data-i18n="isbnFilter">ISBN</span><input name="isbn" th:value="${fIsbn}" placeholder="Código ISBN" data-i18n-placeholder="isbnCodePlaceholder"></label>
+    <div class="filter-actions"><button class="button primary" type="submit" data-i18n="search">Buscar</button><a class="button secondary" th:href="@{/livros}" data-i18n="clear">Limpar</a></div>
+  </form>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="bookColumn">Livro</th><th data-i18n="authorsColumn">Autor(es)</th><th data-i18n="publisherColumn">Editora</th><th data-i18n="isbnLabel">ISBN</th><th data-i18n="actionColumn">Ação</th></tr></thead>
+    <tbody>
+      <tr th:each="livro : ${livros}">
+        <td><strong th:text="${livro.titulo}"></strong><br><small><span data-i18n="volumeLabel">Volume</span> <span th:text="${livro.numeroVolume}"></span></small></td>
+        <td><span th:each="autor,iter : ${livro.autores}"><span th:text="${autor.nome}"></span><span th:if="${!iter.last}">, </span></span></td>
+        <td th:text="${livro.editora.razaoSocial}"></td><td th:text="${livro.isbn}"></td>
+        <td><a class="button small secondary" th:href="@{/livros/{id}(id=${livro.id})}" data-i18n="details">Detalhes</a> <a th:if="${isFuncionario}" class="button small secondary" th:href="@{/admin/livros/{id}/editar(id=${livro.id})}" data-i18n="edit">Editar</a></td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(livros)}"><td colspan="5" class="empty" data-i18n="noBooksFound">Nenhum livro encontrado. Ajuste os filtros ou cadastre um livro.</td></tr>
+    </tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

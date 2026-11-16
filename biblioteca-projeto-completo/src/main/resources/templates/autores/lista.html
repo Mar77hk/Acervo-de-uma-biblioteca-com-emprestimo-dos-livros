@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="authorsPageTitle">Autores</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container">
+  <div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow" data-i18n="registrations">CADASTROS</p><h1 data-i18n="authorsHeading">Autores</h1></div><a class="button primary" th:href="@{/autores/novo}" data-i18n="authorAdd">+ Novo autor</a></div>
+  <div class="table-wrap"><table><thead><tr><th data-i18n="nameColumn">Nome</th><th data-i18n="birthDateColumn">Data de nascimento</th><th data-i18n="actionsColumn">Ações</th></tr></thead>
+    <tbody>
+      <tr th:each="a : ${autores}"><td th:text="${a.nome}"></td><td th:text="${a.dataNascimento != null ? #temporals.format(a.dataNascimento, 'dd/MM/yyyy') : '-'}"></td><td class="actions"><a class="button small secondary" th:href="@{/autores/{id}/editar(id=${a.id})}" data-i18n="edit">Editar</a><form th:action="@{/autores/{id}/excluir(id=${a.id})}" method="post" data-i18n-confirm="authorDeleteConfirm"><button class="button small danger" type="submit" data-i18n="delete">Excluir</button></form></td></tr>
+      <tr th:if="${#lists.isEmpty(autores)}"><td colspan="3" class="empty" data-i18n="authorEmpty">Nenhum autor cadastrado.</td></tr>
+    </tbody>
+  </table></div>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

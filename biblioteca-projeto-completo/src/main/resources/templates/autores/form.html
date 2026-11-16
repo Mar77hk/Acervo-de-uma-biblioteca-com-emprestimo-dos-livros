@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title data-i18n="authorFormPageTitle">Cadastro de autor</title><link rel="stylesheet" th:href="@{/css/style.css}"></head>
+<body>
+<div th:replace="~{fragments :: header}"></div><div th:replace="~{fragments :: accessibility}"></div>
+<main class="container narrow">
+  <section class="panel">
+    <p class="eyebrow" data-i18n="registrations">CADASTROS</p>
+    <h1 th:attr="data-i18n=${autor.id == null ? 'authorNewTitle' : 'authorEditTitle'}" th:text="${autor.id == null ? 'Novo autor' : 'Editar autor'}"></h1>
+    <form th:action="@{/autores/salvar}" th:object="${autor}" method="post" class="form-grid">
+      <input type="hidden" th:field="*{id}">
+      <label><span data-i18n="authorName">Nome</span><input th:field="*{nome}" required><small class="field-error" th:errors="*{nome}"></small></label>
+      <label><span data-i18n="authorBirthDate">Data de nascimento</span><input type="date" th:field="*{dataNascimento}" required><small class="field-error" th:errors="*{dataNascimento}"></small></label>
+      <div class="form-actions"><button class="button primary" type="submit" data-i18n="save">Salvar</button><a class="button secondary" th:href="@{/autores}" data-i18n="cancel">Cancelar</a></div>
+    </form>
+  </section>
+</main>
+<div th:replace="~{fragments :: footer}"></div><script th:src="@{/js/accessibility.js}"></script>
+</body></html>

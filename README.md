@@ -10,9 +10,11 @@ Dentro de `entrega-atualizada/` estão disponíveis:
 
 - [`README.md`](entrega-atualizada/README.md): apresentação da entrega e instruções resumidas.
 - [`Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip`](entrega-atualizada/Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip): código-fonte completo atualizado e configuração do banco.
-- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf`](entrega-atualizada/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf): guia passo a passo para preparar o ambiente e executar a aplicação.
-- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx`](entrega-atualizada/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx): versão editável do guia.
-- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md`](entrega-atualizada/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md): versão em Markdown do guia.
+- [`projeto-mysql/`](entrega-atualizada/projeto-mysql/): código-fonte da versão atual. Use esta pasta para desenvolver e executar após baixar ou clonar a branch.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf`](entrega-atualizada/documentacao/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.pdf): guia em PDF.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx`](entrega-atualizada/documentacao/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.docx): versão editável do guia.
+- [`Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md`](entrega-atualizada/documentacao/Guia_Completo_Instalacao_Execucao_e_Publicacao_Biblioteca.md): versão em Markdown do guia.
+- [`Roteiro de execução local`](entrega-atualizada/projeto-mysql/docs/EXECUCAO_LOCAL.md): instruções para a estrutura atual do repositório.
 
 ## Principais atualizações da entrega individual
 
@@ -24,21 +26,27 @@ Dentro de `entrega-atualizada/` estão disponíveis:
 
 ## Como executar a versão atualizada
 
-1. Acesse a pasta `entrega-atualizada/` e baixe o arquivo `Projeto_Biblioteca_MySQL_Atualizado_COM_GUIA.zip`.
-2. Extraia o ZIP.
-3. No VS Code, abra a pasta do projeto que contém `pom.xml`, `mvnw.cmd` e `compose.yaml` (dentro da estrutura extraída).
+1. Selecione a branch `Entrega-Atualizada` no GitHub e use **Code → Download ZIP**, ou clone essa branch.
+2. Extraia o ZIP da branch e entre na pasta extraída.
+3. No VS Code, abra `entrega-atualizada/projeto-mysql`, que contém `pom.xml`, `mvnw.cmd` e `compose.yaml`. O projeto da raiz é a versão anterior. O ZIP interno é um pacote anterior e pode não conter as alterações mais recentes; prefira os arquivos desta pasta.
 4. Com JDK 21, WSL 2 e Docker Desktop instalados e iniciados, abra um terminal nessa pasta e execute:
 
 ```powershell
 docker compose up -d mysql
 docker compose ps
+```
+
+5. Aguarde o serviço MySQL apresentar estado `healthy`.
+6. Execute os testes e, se passarem, inicie a aplicação:
+
+```powershell
 .\mvnw.cmd clean test
 .\mvnw.cmd spring-boot:run
 ```
 
-5. Aguarde o serviço MySQL apresentar estado `healthy` e acesse `http://localhost:8080`.
+7. Quando a aplicação iniciar, acesse `http://localhost:8080`.
 
-O guia em PDF, disponível em `entrega-atualizada/`, contém o procedimento detalhado e orientações para resolver problemas comuns de instalação e conexão.
+O guia em PDF está em `entrega-atualizada/documentacao/`. Para os caminhos atuais, consulte o [roteiro de execução local](entrega-atualizada/projeto-mysql/docs/EXECUCAO_LOCAL.md). Os testes automatizados usam H2 em memória e podem ser executados somente com JDK 21 e Maven Wrapper, sem iniciar Docker ou MySQL.
 
 ## Observação sobre as versões e o histórico
 

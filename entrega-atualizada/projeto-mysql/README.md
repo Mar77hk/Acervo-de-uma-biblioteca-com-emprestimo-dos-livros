@@ -40,6 +40,12 @@ A aplicação utiliza MySQL 8.4. O Compose mantém os dados no volume `bibliotec
 
 O H2 é usado somente nos testes automatizados, em memória; não é o banco de execução normal da aplicação.
 
+## Cadastro, login e testes
+
+O cadastro aceita CPF e CEP com ou sem a pontuação usual (`529.982.247-25` e `13560-000`). O login aceita e-mail ou CPF, inclusive CPF formatado. A normalização dos documentos não altera a senha e não calcula os dígitos verificadores do CPF.
+
+Os testes podem ser executados antes de iniciar Docker ou MySQL, usando JDK 21 e `.\mvnw.cmd clean test`. Veja os [cenários e limites da validação](docs/VALIDACAO_CADASTRO_LOGIN.md) e a [explicação das alterações](docs/CONTRIBUICAO_CADASTRO_LOGIN.md).
+
 ## Acesso de demonstração
 
 - E-mail: `admin@biblioteca.local`

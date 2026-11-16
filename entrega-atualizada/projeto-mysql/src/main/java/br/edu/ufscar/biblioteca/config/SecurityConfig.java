@@ -21,12 +21,17 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsService userDetailsService(UsuarioRepository usuarios) {
-        return identificador -> usuarios.findByEmailIgnoreCaseOrCpf(identificador, identificador)
-            .map(u -> User.withUsername(u.getEmail())
-                .password(u.getSenha())
-                .roles(u.getTipoUsuario().name())
-                .build())
-            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+        return identificador -> {
+            String valor = identificador.trim();
+            String cpf = valor.matches("[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}")
+                ? valor.replace(".", "").replace("-", "") : valor;
+            return usuarios.findByEmailIgnoreCaseOrCpf(valor, cpf)
+                .map(u -> User.withUsername(u.getEmail())
+                    .password(u.getSenha())
+                    .roles(u.getTipoUsuario().name())
+                    .build())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+        };
     }
 
     @Bean

@@ -101,9 +101,9 @@ As extensões auxiliam na edição, navegação, execução e depuração do pro
 
 ## 7. Extrair e abrir a pasta correta do projeto
 
-1. Extraia `Projeto_Biblioteca_MySQL_Atualizado.zip` para uma pasta de fácil acesso.
+1. Baixe a branch `Entrega-Atualizada` pelo botão **Code → Download ZIP** e extraia o arquivo para uma pasta de fácil acesso.
 2. No VS Code, escolha **File → Open Folder**.
-3. Abra a pasta `biblioteca-projeto-completo`, que contém diretamente os arquivos `pom.xml`, `mvnw.cmd` e `compose.yaml`.
+3. Dentro do repositório extraído, abra a pasta `entrega-atualizada/projeto-mysql`, que contém diretamente os arquivos `pom.xml`, `mvnw.cmd` e `compose.yaml`. O projeto da raiz é a versão anterior; o ZIP interno é um pacote anterior que pode não incluir as últimas alterações.
 4. Não abra apenas `src` e não execute os comandos de outra pasta.
 5. No terminal integrado (**Terminal → New Terminal**), confirme que o caminho atual é a pasta que contém `pom.xml` e `compose.yaml`.
 

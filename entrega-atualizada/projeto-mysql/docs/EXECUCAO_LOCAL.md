@@ -14,7 +14,7 @@ A aplicacao usa Java 21, Spring Boot, Thymeleaf, Spring Security, Spring Data JP
 ## 2. Abrir o projeto
 
 1. Extraia ou clone o repositorio.
-2. No VS Code, use **File → Open Folder** e abra a pasta `biblioteca-projeto-completo`, onde estao `pom.xml`, `mvnw.cmd`, `compose.yaml` e `src`.
+2. No VS Code, use **File → Open Folder** e abra `entrega-atualizada/projeto-mysql`, dentro do repositorio extraido ou clonado. Essa pasta contem `pom.xml`, `mvnw.cmd`, `compose.yaml` e `src`. O projeto que esta na raiz do repositorio e a versao anterior.
 3. Instale as extensoes **Extension Pack for Java** e **Spring Boot Extension Pack**, caso ainda nao estejam instaladas.
 
 ## 3. Iniciar o MySQL
@@ -43,7 +43,7 @@ Ainda na pasta que contem `pom.xml`, rode os testes:
 .\mvnw.cmd clean test
 ```
 
-Os testes usam um H2 em memoria isolado, apenas durante os testes. A aplicacao executada normalmente utiliza MySQL.
+Os testes usam um H2 em memoria isolado, apenas durante os testes. E possivel executar `clean test` antes da etapa 3, sem Docker ou MySQL, desde que o JDK 21 esteja disponivel. A aplicacao executada normalmente utiliza MySQL. Os testes com H2 nao comprovam a persistencia apos reiniciar o MySQL.
 
 Depois, inicie a aplicacao:
 

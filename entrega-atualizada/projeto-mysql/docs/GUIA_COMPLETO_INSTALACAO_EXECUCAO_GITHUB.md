@@ -117,6 +117,8 @@ docker compose up -d mysql
 
 Na primeira execução, o Docker baixa a imagem `mysql:8.4`. É necessário ter conexão com a internet. Em seguida, o Compose cria o banco `biblioteca`, o usuário local da aplicação e o volume persistente `biblioteca_mysql_data`.
 
+ANTES DE FAZER O COMANDO ABAIXO, PRECISA DEIXAR O SOFTWARE DOCKER ABERTO COM A INFORMAÇÃO DE "ENGINEE RUNNING".
+
 Confira o estado do serviço:
 
 ```powershell

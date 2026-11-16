@@ -11,8 +11,8 @@
     <form th:action="@{/cadastro}" th:object="${form}" method="post" class="form-grid">
       <label><span data-i18n="fullName">Nome completo</span><input th:field="*{nome}" required><small class="field-error" th:errors="*{nome}"></small></label>
       <label><span data-i18n="emailLabel">E-mail</span><input type="email" th:field="*{email}" required><small class="field-error" th:errors="*{email}"></small></label>
-      <label><span data-i18n="cpfLabel">CPF (11 números)</span><input th:field="*{cpf}" inputmode="numeric" maxlength="11" required><small class="field-error" th:errors="*{cpf}"></small></label>
-      <label><span data-i18n="cepLabel">CEP (8 números)</span><input th:field="*{cep}" inputmode="numeric" maxlength="8" required><small class="field-error" th:errors="*{cep}"></small></label>
+      <label><span data-i18n="cpfLabel">CPF (11 números)</span><input th:field="*{cpf}" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required><small class="field-error" th:errors="*{cpf}"></small></label>
+      <label><span data-i18n="cepLabel">CEP (8 números)</span><input th:field="*{cep}" inputmode="numeric" maxlength="9" placeholder="00000-000" required><small class="field-error" th:errors="*{cep}"></small></label>
       <label><span data-i18n="passwordMinimum">Senha (mínimo 8 caracteres)</span><input type="password" th:field="*{senha}" minlength="8" required><small class="field-error" th:errors="*{senha}"></small></label>
       <div class="form-actions"><button class="button primary" type="submit" data-i18n="register">Cadastrar</button><a class="button secondary" th:href="@{/}" data-i18n="cancel">Cancelar</a></div>
     </form>

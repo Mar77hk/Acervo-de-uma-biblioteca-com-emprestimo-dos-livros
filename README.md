@@ -51,3 +51,19 @@ O guia em PDF está em `entrega-atualizada/documentacao/`. Para os caminhos atua
 ## Observação sobre as versões e o histórico
 
 Os arquivos que já estavam na raiz do repositório foram preservados. Para a avaliação da versão corrigida e da documentação complementar, consulte a pasta `entrega-atualizada/` indicada acima. O histórico de commits registra as publicações realizadas no GitHub, porém a análise da participação individual no desenvolvimento deve considerar também as atividades efetivamente realizadas e os demais registros disponíveis.
+
+## Melhorias no cadastro e validação de usuários
+
+Contribuição publicada por [Melk-Moreira](https://github.com/Melk-Moreira).
+
+- Cadastro aceita CPF e CEP com a pontuação usual.
+- Login aceita CPF formatado.
+- Formulários ajustados para comportar os documentos formatados.
+- Inclusão de 28 testes de cadastro, login, duplicidade e permissões.
+- Correção dos links e das instruções de execução.
+
+Validação local: 30 testes passaram, incluindo os 2 testes preexistentes.
+Os testes utilizam H2; a validação com MySQL permanece pendente.
+
+Consulte a [explicação das alterações](entrega-atualizada/projeto-mysql/docs/CONTRIBUICAO_CADASTRO_LOGIN.md)
+e os [resultados da validação](entrega-atualizada/projeto-mysql/docs/VALIDACAO_CADASTRO_LOGIN.md).

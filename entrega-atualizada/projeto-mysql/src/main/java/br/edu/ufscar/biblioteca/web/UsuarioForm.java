@@ -12,13 +12,24 @@ public class UsuarioForm {
     @NotBlank @Pattern(regexp = "[0-9]{8}", message = "Informe o CEP com 8 números.") private String cep;
     @NotBlank @Size(min = 8, max = 100, message = "A senha deve ter pelo menos 8 caracteres.") private String senha;
     public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setNome(String nome) { this.nome = nome == null ? null : nome.trim(); }
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email == null ? null : email.trim(); }
     public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    public void setCpf(String cpf) {
+        this.cpf = cpf == null ? null : cpf.trim();
+        // Normaliza a mascara usual antes de @Valid, sem descartar letras ou outros erros.
+        if (this.cpf != null && this.cpf.matches("[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}")) {
+            this.cpf = this.cpf.replace(".", "").replace("-", "");
+        }
+    }
     public String getCep() { return cep; }
-    public void setCep(String cep) { this.cep = cep; }
+    public void setCep(String cep) {
+        this.cep = cep == null ? null : cep.trim();
+        if (this.cep != null && this.cep.matches("[0-9]{5}-[0-9]{3}")) {
+            this.cep = this.cep.replace("-", "");
+        }
+    }
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
 }
